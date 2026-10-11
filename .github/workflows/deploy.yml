@@ -1,0 +1,14 @@
+on:
+  workflow_dispatch:
+    inputs:
+      version: { type: string, required: true }
+      environment: { type: choice, options: [staging], required: true }
+      requested_by: { type: string, required: true, description: Slack user ID }
+      correlation_id:
+        { type: string, required: true, description: sw-support bot correlation ID }
+jobs:
+  deploy:
+    environment: staging # production/GMP: an Environment with required reviewers
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Requested by ${{ inputs.requested_by }} (${{ inputs.correlation_id }})"
